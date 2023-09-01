@@ -78,7 +78,7 @@ def main(page: ft.Page):
     page.add(
         ft.Column(
             [
-                ft.Text("Коля круче всех!", style="headlineSmall"),
+                ft.Text("Коля круче всех!", style = "headlineSmall"),
                 ft.Stack(
                     [
                         progress_ring_background,
