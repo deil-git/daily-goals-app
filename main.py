@@ -49,6 +49,13 @@ def main(page: ft.Page):
         color=ft.colors.WHITE
     )
 
+    goal_icon = ft.Icon(
+        ft.icons.COMPUTER,
+        size=100,
+        tooltip='Делай 💻',
+        color=ft.colors.DEEP_PURPLE_200
+    )
+
     done_icon = ft.Icon(
         ft.icons.STAR_ROUNDED,
         size=100,
@@ -70,6 +77,15 @@ def main(page: ft.Page):
         animate_scale=ft.animation.Animation(600, ft.AnimationCurve.DECELERATE),
     )
 
+    pr_icon = ft.AnimatedSwitcher(
+        goal_icon,
+        transition=ft.AnimatedSwitcherTransition.FADE,
+        duration=700,
+        switch_in_curve=ft.AnimationCurve.DECELERATE,
+        scale=ft.transform.Scale(scale=1),
+        animate_scale=ft.animation.Animation(600, ft.AnimationCurve.DECELERATE),
+    )
+
     pl_b = ft.AnimatedSwitcher(
         plus_btn,
         animate_opacity=300,
@@ -81,9 +97,20 @@ def main(page: ft.Page):
                 ft.Text("Коля круче всех!", style = "headlineSmall"),
                 ft.Stack(
                     [
-                        progress_ring_background,
-                        pr,
-                    ]
+                        ft.Container(
+                            content=progress_ring_background,
+                            alignment=ft.alignment.center,
+                        ),
+                        ft.Container(
+                            content=pr,
+                            alignment=ft.alignment.center,
+                        ),
+                        ft.Container(
+                            content=pr_icon,
+                            alignment=ft.alignment.center,
+
+                        ),
+                    ],
                 ),
                 pl_b,
             ],
