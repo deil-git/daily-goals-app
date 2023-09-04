@@ -35,21 +35,24 @@ def main(page: ft.Page):
         width=100,
         height=100,
         stroke_width=15,
-        color=ft.colors.DEEP_PURPLE_200
+        color=ft.colors.DEEP_PURPLE_200,
+        value=0.0,
     )
 
     progress_ring2 = ft.ProgressRing(
         width=100,
         height=100,
         stroke_width=15,
-        color=ft.colors.DEEP_PURPLE_200
+        color=ft.colors.DEEP_PURPLE_200,
+        value=0.0,
     )
 
     progress_ring_background = ft.ProgressRing(
         width=100,
         height=100,
         stroke_width=15,
-        color=ft.colors.WHITE
+        color=ft.colors.WHITE,
+        value=1.0
     )
 
     goal_icon = ft.Icon(
@@ -97,59 +100,66 @@ def main(page: ft.Page):
 
     goal_text = ft.Text(
         "Программирование",
+        size=16,
         weight=ft.FontWeight.W_600,
         text_align=ft.TextAlign.CENTER,
         animate_opacity=300,
     )
 
-    page.add(
-        ft.Container(
-            ft.Column(
-                [
-                    ft.Container(
-                        goal_text,
-                        width=160,
-                        height=40,
-                        alignment=ft.alignment.center,
-                    ),
-                    ft.Stack(
-                        [
-                            ft.Container(
-                                content=progress_ring_background,
-                                alignment=ft.alignment.center,
-                            ),
-                            ft.Container(
-                                content=pr,
-                                alignment=ft.alignment.center,
-                            ),
-                            ft.Container(
-                                content=pr_icon,
-                                alignment=ft.alignment.center,
+    pr_temp = ft.Container(
+        ft.Column(
+            [
+                ft.Container(
+                    goal_text,
+                    width=160,
+                    height=40,
+                    alignment=ft.alignment.center,
+                ),
+                ft.Stack(
+                    [
+                        ft.Container(
+                            content=progress_ring_background,
+                            alignment=ft.alignment.center,
+                        ),
+                        ft.Container(
+                            content=pr,
+                            alignment=ft.alignment.center,
+                        ),
+                        ft.Container(
+                            content=pr_icon,
+                            alignment=ft.alignment.center,
 
-                            ),
-                        ],
-                    ),
-                    ft.Container(
-                        pl_b,
-                        width=110,
-                        height=40,
-                        alignment=ft.alignment.center,
-                    ),
-                ],
-                spacing=20,
-                alignment=ft.MainAxisAlignment.CENTER,
-                horizontal_alignment=ft.CrossAxisAlignment.CENTER
-            ),
-            bgcolor=ft.colors.BLACK,
-            width=200,
-            height=260,
-            border_radius=30,
+                        ),
+                    ],
+                ),
+                ft.Container(
+                    pl_b,
+                    width=110,
+                    height=40,
+                    alignment=ft.alignment.center,
+                ),
+            ],
+            spacing=20,
+            alignment=ft.MainAxisAlignment.CENTER,
+            horizontal_alignment=ft.CrossAxisAlignment.CENTER
         ),
+        bgcolor=ft.colors.BLACK,
+        width=200,
+        height=260,
+        border_radius=30,
     )
 
-    progress_ring1.value = 0.0
-    progress_ring2.value = 0.0
-    progress_ring_background.value = 1.0
+    page.add(
+        ft.Row(
+            # TODO: Row wrapping
+            [
+                pr_temp,
+                pr_temp
+            ],
+            alignment=ft.MainAxisAlignment.CENTER,
+        )
+    )
+
     page.padding = 0
     page.window_width = 700
     page.window_height = 400
@@ -157,5 +167,5 @@ def main(page: ft.Page):
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
     page.update()
 
-ft.app(target=main)  # Вывести в десктопе
-#ft.app(target=main, view=ft.WEB_BROWSER)  # Вывести в вебе
+
+ft.app(target=main, view=ft.FLET_APP)
