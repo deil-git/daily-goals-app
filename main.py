@@ -25,6 +25,7 @@ def main(page: ft.Page):
             time.sleep(0.6)
             done_icon.scale = 0.85
             pr_icon.scale = 0.85
+            goal_text.opacity = 0.0
             pl_b.opacity = 0.0
         else:
             animate(e)
@@ -95,16 +96,22 @@ def main(page: ft.Page):
     )
 
     goal_text = ft.Text(
-        "Коля круче всех!",
-        style = "headlineSmall",
-        text_align=ft.TextAlign.CENTER
+        "Программирование",
+        weight=ft.FontWeight.W_600,
+        text_align=ft.TextAlign.CENTER,
+        animate_opacity=300,
     )
 
     page.add(
         ft.Container(
             ft.Column(
                 [
-                    goal_text,
+                    ft.Container(
+                        goal_text,
+                        width=160,
+                        height=40,
+                        alignment=ft.alignment.center,
+                    ),
                     ft.Stack(
                         [
                             ft.Container(
@@ -122,19 +129,19 @@ def main(page: ft.Page):
                             ),
                         ],
                     ),
-                    ft.Stack(
-                        [
-                            pl_b,
-                        ]
+                    ft.Container(
+                        pl_b,
+                        width=110,
+                        height=40,
+                        alignment=ft.alignment.center,
                     ),
-
                 ],
                 spacing=20,
                 alignment=ft.MainAxisAlignment.CENTER,
                 horizontal_alignment=ft.CrossAxisAlignment.CENTER
             ),
             bgcolor=ft.colors.BLACK,
-            width=180,
+            width=200,
             height=260,
             border_radius=30,
         ),
@@ -149,7 +156,6 @@ def main(page: ft.Page):
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
     page.update()
-
 
 ft.app(target=main)  # Вывести в десктопе
 #ft.app(target=main, view=ft.WEB_BROWSER)  # Вывести в вебе
