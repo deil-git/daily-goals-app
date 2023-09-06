@@ -4,8 +4,9 @@ import flet as ft
 
 
 class Goal(ft.UserControl):
-    def __init__(self, goal_name, goal_icon, goal_value):
+    def __init__(self, goal_name, goal_icon, goal_value, goal_delete):
         super().__init__()
+        self.goal_delete = goal_delete
         self.completed = False
         self.goal_name = goal_name
         self.goal_icon = goal_icon
@@ -17,6 +18,25 @@ class Goal(ft.UserControl):
             text_align=ft.TextAlign.CENTER,
             animate_opacity=300,
             width=30
+        )
+        self.edit_btn = ft.IconButton(
+            # TODO : Доделать
+            ft.icons.EDIT,
+            on_click=self.delete_clicked,
+            width=30,
+            height=30,
+            icon_size=15,
+            opacity=0.7,
+            icon_color=ft.colors.GREEN_600,
+        )
+        self.remove_btn = ft.IconButton(
+            ft.icons.DELETE,
+            on_click=self.delete_clicked,
+            width=30,
+            height=30,
+            icon_size=15,
+            opacity=0.7,
+            icon_color=ft.colors.RED_600,
         )
         self.plus_btn = ft.IconButton(
             ft.icons.ADD,
@@ -57,7 +77,7 @@ class Goal(ft.UserControl):
         )
         self.goal_text = ft.Text(
             goal_name,
-            size=16,
+            size=15,
             weight=ft.FontWeight.W_600,
             text_align=ft.TextAlign.CENTER,
             animate_opacity=300,
@@ -81,45 +101,60 @@ class Goal(ft.UserControl):
 
     def build(self):
         return ft.Container(
-            ft.Column(
+            ft.Stack(
                 [
-                    ft.Container(
-                        self.goal_text,
-                        width=160,
-                        height=40,
-                        alignment=ft.alignment.center,
-                    ),
-                    ft.Stack(
+                    ft.Column(
                         [
                             ft.Container(
-                                content=self.progress_ring_background,
+                                self.goal_text,
+                                width=160,
+                                height=40,
                                 alignment=ft.alignment.center,
                             ),
-                            ft.Container(
-                                content=self.progress_ring,
-                                alignment=ft.alignment.center,
-                            ),
-                            ft.Container(
-                                content=self.pr_icon,
-                                alignment=ft.alignment.center,
+                            ft.Stack(
+                                [
+                                    ft.Container(
+                                        content=self.progress_ring_background,
+                                        alignment=ft.alignment.center,
+                                    ),
+                                    ft.Container(
+                                        content=self.progress_ring,
+                                        alignment=ft.alignment.center,
+                                    ),
+                                    ft.Container(
+                                        content=self.pr_icon,
+                                        alignment=ft.alignment.center,
 
+                                    ),
+                                ],
+                            ),
+                            ft.Row(
+                                [
+                                    self.mn_b,
+                                    self.goal_count,
+                                    self.pl_b,
+                                ],
+                                alignment=ft.MainAxisAlignment.CENTER,
+                                spacing=10,
                             ),
                         ],
-                    ),
-                    ft.Row(
-                        [
-                            self.mn_b,
-                            self.goal_count,
-                            self.pl_b,
-
-                        ],
+                        spacing=20,
                         alignment=ft.MainAxisAlignment.CENTER,
-                        spacing=10,
+                        horizontal_alignment=ft.CrossAxisAlignment.CENTER
                     ),
-                ],
-                spacing=20,
-                alignment=ft.MainAxisAlignment.CENTER,
-                horizontal_alignment=ft.CrossAxisAlignment.CENTER
+                    ft.Container(
+                        ft.Row(
+                            [
+                                self.edit_btn,
+                                self.remove_btn,
+                            ],
+                            spacing=5,
+                            alignment=ft.MainAxisAlignment.CENTER,
+                        ),
+                        top=3,
+                        left=67,
+                    ),
+                ]
             ),
             bgcolor=ft.colors.BLACK,
             width=200,
@@ -133,9 +168,9 @@ class Goal(ft.UserControl):
         self.counter += 1
         self.goal_count.value = f'{self.counter}/{self.goal_value}'
         temp_pr_value = round(1.0 / self.goal_value, 2)
-        for i in range(15):
-            self.progress_ring.value += temp_pr_value / 15
-            time.sleep(0.025)
+        for i in range(30):
+            self.progress_ring.value += temp_pr_value / 30
+            time.sleep(0.01)
             self.update()
         if self.progress_ring.value >= 1.0:
             time.sleep(0.3)
@@ -158,7 +193,10 @@ class Goal(ft.UserControl):
         self.counter -= 1
         self.goal_count.value = f'{self.counter}/{self.goal_value}'
         temp_pr_value = round(1.0 / self.goal_value, 2)
-        for i in range(15):
-            self.progress_ring.value -= temp_pr_value / 15
-            time.sleep(0.025)
+        for i in range(30):
+            self.progress_ring.value -= temp_pr_value / 30
+            time.sleep(0.01)
             self.update()
+
+    def delete_clicked(self, e):
+        self.goal_delete(self)

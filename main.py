@@ -1,5 +1,5 @@
 import flet as ft
-from goal import Goal
+from app import App
 
 
 def main(page: ft.Page):
@@ -11,12 +11,13 @@ def main(page: ft.Page):
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
     page.update()
 
+    app = App()
+
     page.add(
         ft.Row(
             # TODO: Row wrapping
             [
-                Goal("Программирование", ft.icons.COMPUTER, 4),
-                Goal("Рисование", ft.icons.BRUSH, 6)
+                app
             ],
             alignment=ft.MainAxisAlignment.CENTER,
             spacing=20,
