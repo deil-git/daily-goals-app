@@ -4,8 +4,8 @@ from app import App
 
 def main(page: ft.Page):
     page.title = "Daily goals"
-    page.padding = 0
-    page.window_width = 700
+    page.padding = 10
+    page.window_width = 600
     page.window_height = 400
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
@@ -14,14 +14,7 @@ def main(page: ft.Page):
     app = App()
 
     page.add(
-        ft.Row(
-            # TODO: Row wrapping
-            [
-                app
-            ],
-            alignment=ft.MainAxisAlignment.CENTER,
-            spacing=20,
-        )
+        app
     )
 
 

@@ -4,13 +4,15 @@ import flet as ft
 
 
 class Goal(ft.UserControl):
-    def __init__(self, goal_name, goal_icon, goal_value, goal_delete):
+    def __init__(self, goal_name, goal_icon, goal_value, goal_delete, update_main_pr):
         super().__init__()
+        self.update_main_pr = update_main_pr
         self.goal_delete = goal_delete
         self.completed = False
         self.goal_name = goal_name
         self.goal_icon = goal_icon
         self.goal_value = goal_value
+        self.goal_complete_value = 0
         self.counter = 0
         self.goal_count = ft.Text(
             f'{self.counter}/{self.goal_value}',
@@ -165,11 +167,13 @@ class Goal(ft.UserControl):
     def plus_click(self, e):
         if self.counter == self.goal_value:
             return
+        self.goal_complete_value += 1
+        self.update_main_pr(self)
         self.counter += 1
         self.goal_count.value = f'{self.counter}/{self.goal_value}'
         temp_pr_value = round(1.0 / self.goal_value, 2)
         for i in range(30):
-            self.progress_ring.value += temp_pr_value / 30
+            self.progress_ring.value += temp_pr_value / 29.9
             time.sleep(0.01)
             self.update()
         if self.progress_ring.value >= 1.0:
@@ -190,11 +194,13 @@ class Goal(ft.UserControl):
     def minus_click(self, e):
         if self.counter == 0:
             return
+        self.goal_complete_value -= 1
+        self.update_main_pr(self)
         self.counter -= 1
         self.goal_count.value = f'{self.counter}/{self.goal_value}'
         temp_pr_value = round(1.0 / self.goal_value, 2)
         for i in range(30):
-            self.progress_ring.value -= temp_pr_value / 30
+            self.progress_ring.value -= temp_pr_value / 29.9
             time.sleep(0.01)
             self.update()
 
