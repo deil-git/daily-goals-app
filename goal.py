@@ -4,8 +4,9 @@ import flet as ft
 
 
 class Goal(ft.UserControl):
-    def __init__(self, goal_name, goal_icon, goal_value, goal_delete, update_main_pr):
+    def __init__(self, goal_name, goal_icon, goal_value, goal_delete, update_main_pr, settings_visible):
         super().__init__()
+        self.settings_visible = settings_visible
         self.update_main_pr = update_main_pr
         self.goal_delete = goal_delete
         self.completed = False
@@ -27,18 +28,20 @@ class Goal(ft.UserControl):
             on_click=self.delete_clicked,
             width=30,
             height=30,
-            icon_size=15,
+            icon_size=14,
             opacity=0.7,
             icon_color=ft.colors.GREEN_600,
+            visible=settings_visible
         )
         self.remove_btn = ft.IconButton(
             ft.icons.DELETE,
             on_click=self.delete_clicked,
             width=30,
             height=30,
-            icon_size=15,
+            icon_size=14,
             opacity=0.7,
             icon_color=ft.colors.RED_600,
+            visible=settings_visible
         )
         self.plus_btn = ft.IconButton(
             ft.icons.ADD,
