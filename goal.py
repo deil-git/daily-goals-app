@@ -26,22 +26,20 @@ class Goal(ft.UserControl):
             # TODO : Доделать
             ft.icons.EDIT,
             on_click=self.delete_clicked,
-            width=30,
-            height=30,
-            icon_size=14,
-            opacity=0.7,
+            icon_size=25,
+            bgcolor=ft.colors.BLACK,
             icon_color=ft.colors.GREEN_600,
-            visible=settings_visible
+            visible=settings_visible,
+            height=100,
         )
         self.remove_btn = ft.IconButton(
             ft.icons.DELETE,
             on_click=self.delete_clicked,
-            width=30,
-            height=30,
-            icon_size=14,
-            opacity=0.7,
+            icon_size=25,
+            bgcolor=ft.colors.BLACK,
             icon_color=ft.colors.RED_600,
-            visible=settings_visible
+            visible=settings_visible,
+            height=100,
         )
         self.plus_btn = ft.IconButton(
             ft.icons.ADD,
@@ -71,7 +69,8 @@ class Goal(ft.UserControl):
             height=100,
             stroke_width=15,
             color=ft.colors.WHITE,
-            value=1.0
+            value=1.0,
+            visible=not settings_visible,
         )
         self.progress_ring = ft.ProgressRing(
             width=100,
@@ -79,6 +78,7 @@ class Goal(ft.UserControl):
             stroke_width=15,
             color=ft.colors.DEEP_PURPLE_200,
             value=0.0,
+            visible=not settings_visible,
         )
         self.goal_text = ft.Text(
             goal_name,
@@ -129,7 +129,15 @@ class Goal(ft.UserControl):
                                     ft.Container(
                                         content=self.pr_icon,
                                         alignment=ft.alignment.center,
-
+                                    ),
+                                    ft.Row(
+                                        [
+                                            self.edit_btn,
+                                            self.remove_btn,
+                                        ],
+                                        alignment=ft.MainAxisAlignment.CENTER,
+                                        vertical_alignment=ft.CrossAxisAlignment.CENTER,
+                                        spacing=60,
                                     ),
                                 ],
                             ),
@@ -146,18 +154,6 @@ class Goal(ft.UserControl):
                         spacing=20,
                         alignment=ft.MainAxisAlignment.CENTER,
                         horizontal_alignment=ft.CrossAxisAlignment.CENTER
-                    ),
-                    ft.Container(
-                        ft.Row(
-                            [
-                                self.edit_btn,
-                                self.remove_btn,
-                            ],
-                            spacing=5,
-                            alignment=ft.MainAxisAlignment.CENTER,
-                        ),
-                        top=3,
-                        left=67,
                     ),
                 ]
             ),

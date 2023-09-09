@@ -8,24 +8,31 @@ class App(ft.UserControl):
         self.list_complete_goals_value = {}
         self.list_goals_value = {}
         self.main_pr_text = ft.Text("0 %", weight=ft.FontWeight.W_600, width=70,
-                                    text_align=ft.TextAlign.END)
+                                    text_align=ft.TextAlign.CENTER)
         self.main_pr = ft.ProgressBar(value=0, width=400, color=ft.colors.DEEP_PURPLE_200, bgcolor=ft.colors.WHITE)
         self.goals = ft.GridView(height=530, width=415, child_aspect_ratio=0.8, spacing=10, padding=5, max_extent=260,)
 
         return ft.Column(
             [
-                ft.Row(
+                ft.Column(
                     [
                         self.main_pr_text,
                         self.main_pr,
-                        ft.IconButton(icon=ft.icons.SETTINGS, on_click=self.settings_clicked, width=30, height=30,
-                                      icon_size=14, ),
-                        ft.IconButton(icon=ft.icons.NOTE_ADD, on_click=self.add_clicked, width=30, height=30,
-                                      icon_size=14, ),
+                        ft.Row(
+                            [
+                                ft.IconButton(icon=ft.icons.STAR_ROUNDED, on_click=self.settings_clicked,
+                                              width=30, height=30, icon_size=15, ),
+                                ft.IconButton(icon=ft.icons.SETTINGS, on_click=self.settings_clicked,
+                                              width=30, height=30, icon_size=14, ),
+                                ft.IconButton(icon=ft.icons.NOTE_ADD, on_click=self.add_clicked,
+                                              width=30, height=30, icon_size=14, ),
+                            ],
+                            alignment=ft.MainAxisAlignment.CENTER
+                        ),
                     ],
                     width=600,
-                    alignment=ft.MainAxisAlignment.CENTER,
-                    spacing=10
+                    alignment=ft.MainAxisAlignment.START,
+                    horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                 ),
                 self.goals
             ],
@@ -41,10 +48,14 @@ class App(ft.UserControl):
                 self.settings_visible = False
                 self.goals.controls[i].edit_btn.visible = False
                 self.goals.controls[i].remove_btn.visible = False
+                self.goals.controls[i].progress_ring_background.visible = True
+                self.goals.controls[i].progress_ring.visible = True
             else:
                 self.settings_visible = True
                 self.goals.controls[i].edit_btn.visible = True
                 self.goals.controls[i].remove_btn.visible = True
+                self.goals.controls[i].progress_ring_background.visible = False
+                self.goals.controls[i].progress_ring.visible = False
             self.goals.controls[i].update()
 
     def add_clicked(self, e):
