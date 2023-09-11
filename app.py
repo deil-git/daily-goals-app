@@ -9,8 +9,76 @@ class App(ft.UserControl):
         self.list_goals_value = {}
         self.main_pr_text = ft.Text("0 %", weight=ft.FontWeight.W_600, width=70,
                                     text_align=ft.TextAlign.CENTER)
-        self.main_pr = ft.ProgressBar(value=0, width=400, color=ft.colors.DEEP_PURPLE_200, bgcolor=ft.colors.WHITE)
+        self.main_pr = ft.ProgressBar(value=0, width=400, color=ft.colors.WHITE)
         self.goals = ft.GridView(height=530, width=415, child_aspect_ratio=0.8, spacing=10, padding=5, max_extent=260,)
+        self.color_radio_btn = ft.RadioGroup(
+            content=ft.Row(
+                [
+                    ft.Radio(value=ft.colors.RED_500, fill_color=ft.colors.RED_500, scale=1.2),
+                    ft.Radio(value=ft.colors.GREEN_500, fill_color=ft.colors.GREEN_500, scale=1.2),
+                    ft.Radio(value=ft.colors.BLUE_500, fill_color=ft.colors.BLUE_500, scale=1.2),
+                    ft.Radio(value=ft.colors.YELLOW_500, fill_color=ft.colors.YELLOW_500, scale=1.2),
+                    ft.Radio(value=ft.colors.DEEP_PURPLE_400, fill_color=ft.colors.DEEP_PURPLE_400, scale=1.2),
+                    ft.Radio(value=ft.colors.BLUE_GREY_400, fill_color=ft.colors.BLUE_GREY_400, scale=1.2),
+                    ft.Radio(value=ft.colors.PINK_400, fill_color=ft.colors.PINK_400, scale=1.2),
+                    ft.Radio(value=ft.colors.CYAN_300, fill_color=ft.colors.CYAN_300, scale=1.2),
+                    ft.Radio(value=ft.colors.DEEP_ORANGE_400, fill_color=ft.colors.DEEP_ORANGE_400, scale=1.2),
+                ],
+                wrap=True,
+                spacing=10,
+                width=120,
+                alignment=ft.MainAxisAlignment.CENTER
+            )
+        )
+        self.name_from_user = ft.TextField(label="Введите название")
+        self.counter_from_user = ft.TextField(value="0", text_align=ft.TextAlign.CENTER, width=100, read_only=True)
+        self.counter_mn_btn = ft.IconButton(
+                            ft.icons.REMOVE,
+                            on_click=self.counter_minus,
+                            disabled=True,
+                            width=40,
+                        )
+        self.counter_pl_btn = ft.IconButton(
+                            ft.icons.ADD,
+                            on_click=self.counter_plus,
+                            width=40,
+                        )
+        self.comb_for_dialog = ft.Column(
+            [
+                ft.Container(width=1, height=3),
+                self.name_from_user,
+                ft.Container(width=1, height=10),
+                ft.Text("Выберите цвет", opacity=0.7),
+                self.color_radio_btn,
+                ft.Container(width=1, height=10),
+                ft.Text("Выберите число повторений", opacity=0.7),
+                ft.Row(
+                    [
+                        self.counter_mn_btn,
+                        self.counter_from_user,
+                        self.counter_pl_btn,
+                    ],
+                    alignment=ft.MainAxisAlignment.CENTER,
+                    spacing=10,
+                ),
+            ],
+            height=360,
+            width=300,
+            alignment=ft.MainAxisAlignment.START,
+            horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+        )
+        self.create_dialog = ft.AlertDialog(
+        modal=True,
+        title=ft.Text("Настройте цель", text_align=ft.TextAlign.CENTER),
+        content=self.comb_for_dialog,
+        actions=[
+            ft.TextButton("Добавить", icon=ft.icons.CHECK_CIRCLE_ROUNDED, on_click=self.create_close_dlg, icon_color=ft.colors.GREEN_500),
+            ft.Container(height=1, width=15),
+            ft.TextButton("Отменить", icon=ft.icons.CANCEL_ROUNDED, on_click=self.close_dlg, icon_color=ft.colors.RED_500),
+        ],
+        actions_alignment=ft.MainAxisAlignment.CENTER,
+        on_dismiss=lambda e: print("Диалог закрыт!"),
+        )
 
         return ft.Column(
             [
@@ -20,7 +88,7 @@ class App(ft.UserControl):
                         self.main_pr,
                         ft.Row(
                             [
-                                ft.IconButton(icon=ft.icons.STAR_ROUNDED, on_click=self.settings_clicked,
+                                ft.IconButton(icon=ft.icons.STAR_ROUNDED, on_click=self.open_dlg_modal,
                                               width=30, height=30, icon_size=15, ),
                                 ft.IconButton(icon=ft.icons.SETTINGS, on_click=self.settings_clicked,
                                               width=30, height=30, icon_size=14, ),
@@ -59,7 +127,7 @@ class App(ft.UserControl):
             self.goals.controls[i].update()
 
     def add_clicked(self, e):
-        goal = Goal("Программирование", ft.icons.COMPUTER, 4,
+        goal = Goal("Программирование", ft.icons.COMPUTER, 4, ft.colors.RED_500,
                     self.goal_delete, self.update_main_pr, self.settings_visible)
         self.goals.controls.append(goal)
         self.list_goals_value[goal] = goal.goal_value
@@ -88,3 +156,36 @@ class App(ft.UserControl):
         self.main_pr.value = temp / 100
         self.main_pr_text.value = f"{temp} %"
         self.update()
+
+    def open_dlg_modal(self, e):
+        self.page.dialog = self.create_dialog
+        self.create_dialog.open = True
+        self.page.update()
+
+    def create_close_dlg(self, e):
+        goal = Goal(self.name_from_user.value, ft.icons.COMPUTER, int(self.counter_from_user.value),
+                    self.color_radio_btn.value, self.goal_delete, self.update_main_pr, self.settings_visible)
+        self.goals.controls.append(goal)
+        self.list_goals_value[goal] = goal.goal_value
+        self.list_complete_goals_value[goal] = 0
+        temp = int(round((sum(self.list_complete_goals_value.values()) / sum(self.list_goals_value.values())), 2) * 100)
+        self.main_pr.value = temp / 100
+        self.main_pr_text.value = f"{temp} %"
+        self.update()
+        self.create_dialog.open = False
+        self.page.update()
+
+    def close_dlg(self, e):
+        self.create_dialog.open = False
+        self.page.update()
+
+    def counter_minus(self, e):
+        self.counter_from_user.value = str(int(self.counter_from_user.value) - 1)
+        if int(self.counter_from_user.value) <= 0:
+            self.counter_mn_btn.disabled = True
+        self.page.update()
+
+    def counter_plus(self, e):
+        self.counter_mn_btn.disabled = False
+        self.counter_from_user.value = str(int(self.counter_from_user.value) + 1)
+        self.page.update()

@@ -4,10 +4,11 @@ import flet as ft
 
 
 class Goal(ft.UserControl):
-    def __init__(self, goal_name, goal_icon, goal_value, goal_delete, update_main_pr, settings_visible):
+    def __init__(self, goal_name, goal_icon, goal_value, goal_color, goal_delete, update_main_pr, settings_visible):
         super().__init__()
         self.settings_visible = settings_visible
         self.update_main_pr = update_main_pr
+        self.goal_color = goal_color
         self.goal_delete = goal_delete
         self.completed = False
         self.goal_name = goal_name
@@ -20,7 +21,7 @@ class Goal(ft.UserControl):
             weight=ft.FontWeight.W_600,
             text_align=ft.TextAlign.CENTER,
             animate_opacity=300,
-            width=30
+            width=40
         )
         self.edit_btn = ft.IconButton(
             # TODO : Доделать
@@ -55,14 +56,14 @@ class Goal(ft.UserControl):
             ft.icons.STAR_ROUNDED,
             size=100,
             tooltip='Молодец 🎉',
-            color=ft.colors.DEEP_PURPLE_200,
+            color=goal_color,
             scale=0,
         )
         self.goal_icon = ft.Icon(
             goal_icon,
             size=100,
             tooltip='Делай',
-            color=ft.colors.DEEP_PURPLE_200
+            color=goal_color
         )
         self.progress_ring_background = ft.ProgressRing(
             width=100,
@@ -76,7 +77,7 @@ class Goal(ft.UserControl):
             width=100,
             height=100,
             stroke_width=15,
-            color=ft.colors.DEEP_PURPLE_200,
+            color=goal_color,
             value=0.0,
             visible=not settings_visible,
         )
