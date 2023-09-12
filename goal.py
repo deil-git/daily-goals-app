@@ -171,12 +171,12 @@ class Goal(ft.UserControl):
         self.update_main_pr(self)
         self.counter += 1
         self.goal_count.value = f'{self.counter}/{self.goal_value}'
-        temp_pr_value = round(1.0 / self.goal_value, 2)
+        temp_pr_value = 1.0 / self.goal_value
         for i in range(30):
-            self.progress_ring.value += temp_pr_value / 29.9
+            self.progress_ring.value += temp_pr_value / 30
             time.sleep(0.01)
             self.update()
-        if self.progress_ring.value >= 1.0:
+        if self.progress_ring.value >= 0.999999999999:
             time.sleep(0.3)
             self.pr_icon.scale = 0
             self.update()
