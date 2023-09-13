@@ -12,7 +12,7 @@ class App(ft.UserControl):
         self.main_pr_text = ft.Text("0 %", weight=ft.FontWeight.W_600, width=70,
                                     text_align=ft.TextAlign.CENTER)
         self.main_pr = ft.ProgressBar(value=0, width=400, color=ft.colors.WHITE)
-        self.goals = ft.GridView(height=530, width=415, child_aspect_ratio=0.8, spacing=10, padding=5, max_extent=260,)
+        self.goals = ft.GridView(height=530, width=415, child_aspect_ratio=0.8, spacing=10, padding=5, max_extent=260, )
         self.red = ft.Radio(value=ft.colors.RED_500, fill_color=ft.colors.RED_500, scale=1.2)
         self.green = ft.Radio(value=ft.colors.GREEN_500, fill_color=ft.colors.GREEN_500, scale=1.2)
         self.blue = ft.Radio(value=ft.colors.BLUE_500, fill_color=ft.colors.BLUE_500, scale=1.2)
@@ -23,8 +23,8 @@ class App(ft.UserControl):
         self.cyan = ft.Radio(value=ft.colors.CYAN_300, fill_color=ft.colors.CYAN_300, scale=1.2)
         self.orange = ft.Radio(value=ft.colors.DEEP_ORANGE_400, fill_color=ft.colors.DEEP_ORANGE_400, scale=1.2)
         self.color_list = [self.red.value, self.green.value, self.blue.value,
-                    self.yellow.value, self.purple.value, self.grey.value,
-                    self.pink.value, self.cyan.value, self.orange.value]
+                           self.yellow.value, self.purple.value, self.grey.value,
+                           self.pink.value, self.cyan.value, self.orange.value]
         self.text_hint_list = ["Супер цель", "Прикол", "АААААААА"]
         self.color_radio_btn = ft.RadioGroup(
             content=ft.Row(
@@ -39,20 +39,46 @@ class App(ft.UserControl):
                 alignment=ft.MainAxisAlignment.CENTER,
             )
         )
-        self.icon_user = ft.IconButton(icon=ft.icons.QUESTION_MARK)
+        self.icon_user = ft.IconButton(
+            icon=ft.icons.QUESTION_MARK,
+            icon_color=ft.colors.BLACK,
+            bgcolor=ft.colors.INDIGO_50,
+            opacity=0.6,
+            on_click=self.icon_choose
+        )
+        self.icon_choose_window = ft.Container(
+            ft.GridView(
+                [
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.SMART_TOY),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.BED),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.NETWORK_LOCKED),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.HD),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.HOUSE),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.VIEW_LIST),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.LAPTOP),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.BRUSH),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.BOOK),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.PUNCH_CLOCK),
+                ],
+                height=400,
+                width=400,
+                spacing=10, padding=10, max_extent=50
+            ),
+            visible=False,
+        )
         self.name_from_user = ft.TextField(hint_text=random.choice(self.text_hint_list), width=220)
         self.counter_from_user = ft.TextField(value="1", text_align=ft.TextAlign.CENTER, width=100, read_only=True)
         self.counter_mn_btn = ft.IconButton(
-                            ft.icons.REMOVE,
-                            on_click=self.counter_minus,
-                            disabled=True,
-                            width=40,
-                        )
+            ft.icons.REMOVE,
+            on_click=self.counter_minus,
+            disabled=True,
+            width=40,
+        )
         self.counter_pl_btn = ft.IconButton(
-                            ft.icons.ADD,
-                            on_click=self.counter_plus,
-                            width=40,
-                        )
+            ft.icons.ADD,
+            on_click=self.counter_plus,
+            width=40,
+        )
         self.comb_for_dialog = ft.Column(
             [
                 ft.Container(width=1, height=2),
@@ -84,17 +110,31 @@ class App(ft.UserControl):
             alignment=ft.MainAxisAlignment.START,
             horizontal_alignment=ft.CrossAxisAlignment.CENTER,
         )
+        self.comb_2 = ft.Column(
+            [
+                self.icon_choose_window,
+                self.comb_for_dialog,
+            ],
+            height=390,
+            width=300,
+            alignment=ft.MainAxisAlignment.START,
+            horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+        )
+        self.OK_btn = ft.TextButton("Добавить", icon=ft.icons.CHECK_CIRCLE_ROUNDED, on_click=self.create_close_dlg,
+                              icon_color=ft.colors.GREEN_500)
+        self.X_btn = ft.TextButton("Отменить", icon=ft.icons.CANCEL_ROUNDED, on_click=self.close_dlg,
+                              icon_color=ft.colors.RED_500)
         self.create_dialog = ft.AlertDialog(
-        modal=True,
-        title=ft.Text("Настройте цель", text_align=ft.TextAlign.CENTER),
-        content=self.comb_for_dialog,
-        actions=[
-            ft.TextButton("Добавить", icon=ft.icons.CHECK_CIRCLE_ROUNDED, on_click=self.create_close_dlg, icon_color=ft.colors.GREEN_500),
-            ft.Container(height=1, width=15),
-            ft.TextButton("Отменить", icon=ft.icons.CANCEL_ROUNDED, on_click=self.close_dlg, icon_color=ft.colors.RED_500),
-        ],
-        actions_alignment=ft.MainAxisAlignment.CENTER,
-        on_dismiss=lambda e: print("Диалог закрыт!"),
+            modal=True,
+            title=ft.Text("Настройте цель", text_align=ft.TextAlign.CENTER),
+            content=self.comb_2,
+            actions=[
+                self.OK_btn,
+                ft.Container(height=1, width=15),
+                self.X_btn,
+            ],
+            actions_alignment=ft.MainAxisAlignment.CENTER,
+            on_dismiss=lambda e: print("Диалог закрыт!"),
         )
 
         return ft.Column(
@@ -159,7 +199,8 @@ class App(ft.UserControl):
         self.list_complete_goals_value.pop(goal)
         self.goals.controls.remove(goal)
         if sum(self.list_goals_value.values()) != 0:
-            temp = int(round((sum(self.list_complete_goals_value.values()) / sum(self.list_goals_value.values())), 2) * 100)
+            temp = int(
+                round((sum(self.list_complete_goals_value.values()) / sum(self.list_goals_value.values())), 2) * 100)
             self.main_pr.value = temp / 100
             self.main_pr_text.value = f"{temp} %"
         else:
@@ -184,7 +225,7 @@ class App(ft.UserControl):
     def create_close_dlg(self, e):
         if self.name_from_user.value == '':
             self.name_from_user.value = self.name_from_user.hint_text
-        goal = Goal(self.name_from_user.value, ft.icons.COMPUTER, int(self.counter_from_user.value),
+        goal = Goal(self.name_from_user.value,  self.icon_user.icon, int(self.counter_from_user.value),
                     self.color_radio_btn.value, self.goal_delete, self.update_main_pr, self.settings_visible)
         self.goals.controls.append(goal)
         self.list_goals_value[goal] = goal.goal_value
@@ -196,10 +237,14 @@ class App(ft.UserControl):
         self.create_dialog.open = False
         self.name_from_user.value = ''
         self.counter_from_user.value = str(1)
+        self.icon_user.icon = ft.icons.QUESTION_MARK
         self.page.update()
 
     def close_dlg(self, e):
         self.create_dialog.open = False
+        self.icon_user.icon = ft.icons.QUESTION_MARK
+        self.name_from_user.value = ''
+        self.counter_from_user.value = str(1)
         self.page.update()
 
     def counter_minus(self, e):
@@ -215,4 +260,23 @@ class App(ft.UserControl):
         self.counter_from_user.value = str(int(self.counter_from_user.value) + 1)
         if int(self.counter_from_user.value) >= 999:
             self.counter_pl_btn.disabled = True
+        self.page.update()
+
+    def icon_choose(self, e):
+        self.OK_btn.opacity = 0
+        self.OK_btn.disabled = True
+        self.X_btn.opacity = 0
+        self.X_btn.disabled = True
+        self.comb_for_dialog.visible = False
+        self.icon_choose_window.visible = True
+        self.page.update()
+
+    def icon_init(self, e):
+        self.OK_btn.opacity = 1
+        self.OK_btn.disabled = False
+        self.X_btn.opacity = 1
+        self.X_btn.disabled = False
+        self.comb_for_dialog.visible = True
+        self.icon_choose_window.visible = False
+        self.icon_user.icon = e.control.icon
         self.page.update()
