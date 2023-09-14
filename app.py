@@ -1,3 +1,4 @@
+import time
 import random
 
 import flet as ft
@@ -11,7 +12,7 @@ class App(ft.UserControl):
         self.list_goals_value = {}
         self.main_pr_text = ft.Text("0 %", weight=ft.FontWeight.W_600, width=70,
                                     text_align=ft.TextAlign.CENTER)
-        self.main_pr = ft.ProgressBar(value=0, width=400, color=ft.colors.WHITE)
+        self.main_pr = ft.ProgressBar(value=0, width=400, height=8, color=ft.colors.WHITE)
         self.goals = ft.GridView(height=530, width=415, child_aspect_ratio=0.8, spacing=10, padding=5, max_extent=260, )
         self.red = ft.Radio(value=ft.colors.RED_500, fill_color=ft.colors.RED_500, scale=1.2)
         self.green = ft.Radio(value=ft.colors.GREEN_500, fill_color=ft.colors.GREEN_500, scale=1.2)
@@ -122,6 +123,8 @@ class App(ft.UserControl):
         )
         self.OK_btn = ft.TextButton("Добавить", icon=ft.icons.CHECK_CIRCLE_ROUNDED, on_click=self.create_close_dlg,
                               icon_color=ft.colors.GREEN_500)
+        self.OK_btn_2 = ft.TextButton("Добавить", icon=ft.icons.CHECK_CIRCLE_ROUNDED, on_click=self.complete_close_dlg,
+                                    icon_color=ft.colors.GREEN_500)
         self.X_btn = ft.TextButton("Отменить", icon=ft.icons.CANCEL_ROUNDED, on_click=self.close_dlg,
                               icon_color=ft.colors.RED_500)
         self.create_dialog = ft.AlertDialog(
@@ -130,6 +133,21 @@ class App(ft.UserControl):
             content=self.comb_2,
             actions=[
                 self.OK_btn,
+                ft.Container(height=1, width=15),
+                self.X_btn,
+            ],
+            actions_alignment=ft.MainAxisAlignment.CENTER,
+            on_dismiss=lambda e: print("Диалог закрыт!"),
+        )
+        self.animArray = ["· .(^-^)' ·", "⁎ -(^-^)- ⁎", "﹡ '(^-^). ﹡", "⁕ -(^o^)- ⁕",
+                          "✱ .(^-^)' ✱", "⁕ -(^-^)- ⁕", "★ '(^-^). ★", "☆ -(^-^)- ☆"]
+        self.complete_comb = ft.Text(" ", opacity=0.7, text_align=ft.TextAlign.CENTER, scale=1.6)
+        self.complete_dialog = ft.AlertDialog(
+            modal=True,
+            title=ft.Text("Выполнить все цели?", text_align=ft.TextAlign.CENTER),
+            content=self.complete_comb,
+            actions=[
+                self.OK_btn_2,
                 ft.Container(height=1, width=15),
                 self.X_btn,
             ],
@@ -145,11 +163,11 @@ class App(ft.UserControl):
                         self.main_pr,
                         ft.Row(
                             [
-                                ft.IconButton(icon=ft.icons.STAR_ROUNDED, on_click=self.open_dlg_modal,
+                                ft.IconButton(icon=ft.icons.STAR_ROUNDED, on_click=self.open_complete_dialog,
                                               width=30, height=30, icon_size=15, ),
                                 ft.IconButton(icon=ft.icons.SETTINGS, on_click=self.settings_clicked,
                                               width=30, height=30, icon_size=14, ),
-                                ft.IconButton(icon=ft.icons.NOTE_ADD, on_click=self.add_clicked,
+                                ft.IconButton(icon=ft.icons.NOTE_ADD, on_click=self.open_dlg_modal,
                                               width=30, height=30, icon_size=14, ),
                             ],
                             alignment=ft.MainAxisAlignment.CENTER
@@ -182,17 +200,6 @@ class App(ft.UserControl):
                 self.goals.controls[i].progress_ring_background.visible = False
                 self.goals.controls[i].progress_ring.visible = False
             self.goals.controls[i].update()
-
-    def add_clicked(self, e):
-        goal = Goal("Программирование", ft.icons.COMPUTER, 4, ft.colors.RED_500,
-                    self.goal_delete, self.update_main_pr, self.settings_visible)
-        self.goals.controls.append(goal)
-        self.list_goals_value[goal] = goal.goal_value
-        self.list_complete_goals_value[goal] = 0
-        temp = int(round((sum(self.list_complete_goals_value.values()) / sum(self.list_goals_value.values())), 2) * 100)
-        self.main_pr.value = temp / 100
-        self.main_pr_text.value = f"{temp} %"
-        self.update()
 
     def goal_delete(self, goal):
         self.list_goals_value.pop(goal)
@@ -241,10 +248,13 @@ class App(ft.UserControl):
         self.page.update()
 
     def close_dlg(self, e):
-        self.create_dialog.open = False
-        self.icon_user.icon = ft.icons.QUESTION_MARK
-        self.name_from_user.value = ''
-        self.counter_from_user.value = str(1)
+        if self.create_dialog.open:
+            self.create_dialog.open = False
+            self.icon_user.icon = ft.icons.QUESTION_MARK
+            self.name_from_user.value = ''
+            self.counter_from_user.value = str(1)
+        else:
+            self.complete_dialog.open = False
         self.page.update()
 
     def counter_minus(self, e):
@@ -280,3 +290,21 @@ class App(ft.UserControl):
         self.icon_choose_window.visible = False
         self.icon_user.icon = e.control.icon
         self.page.update()
+
+    def open_complete_dialog(self, e):
+        self.page.dialog = self.complete_dialog
+        self.complete_dialog.open = True
+        self.page.update()
+        while self.complete_dialog.open:
+            for i in self.animArray:
+                self.complete_comb.value = i
+                self.page.update()
+                time.sleep(0.2)
+
+    def complete_close_dlg(self, e):
+        self.complete_dialog.open = False
+        self.page.update()
+        for key, value in self.list_goals_value.items():
+            while key.counter != value:
+                key.plus_click(self)
+            self.update()
