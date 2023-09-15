@@ -53,13 +53,64 @@ class App(ft.UserControl):
                     ft.IconButton(on_click=self.icon_init, icon=ft.icons.SMART_TOY),
                     ft.IconButton(on_click=self.icon_init, icon=ft.icons.BED),
                     ft.IconButton(on_click=self.icon_init, icon=ft.icons.NETWORK_LOCKED),
-                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.HD),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.DIRECTIONS_CAR_ROUNDED),
                     ft.IconButton(on_click=self.icon_init, icon=ft.icons.HOUSE),
                     ft.IconButton(on_click=self.icon_init, icon=ft.icons.VIEW_LIST),
                     ft.IconButton(on_click=self.icon_init, icon=ft.icons.LAPTOP),
                     ft.IconButton(on_click=self.icon_init, icon=ft.icons.BRUSH),
                     ft.IconButton(on_click=self.icon_init, icon=ft.icons.BOOK),
-                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.PUNCH_CLOCK),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.SHOPPING_CART),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.CARPENTER),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.SD_CARD_ROUNDED),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.WALLET_GIFTCARD),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.ALTERNATE_EMAIL_ROUNDED),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.ALL_INCLUSIVE_ROUNDED),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.ANCHOR_ROUNDED),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.APARTMENT_ROUNDED),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.ARCHITECTURE_ROUNDED),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.ACCOUNT_BOX),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.ACCOUNT_TREE_OUTLINED),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.ASSISTANT_OUTLINED),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.AGRICULTURE_ROUNDED),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.AC_UNIT_ROUNDED),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.AIR_ROUNDED),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.ADS_CLICK),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.AIRLINE_SEAT_INDIVIDUAL_SUITE_ROUNDED),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.AIRLINE_STOPS_ROUNDED),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.AIRPLANE_TICKET_ROUNDED),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.AIRPLANEMODE_ACTIVE),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.ALBUM_ROUNDED),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.ATTACHMENT_ROUNDED),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.AUDIOTRACK),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.ATTRACTIONS_OUTLINED),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.AUTO_AWESOME_ROUNDED),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.AUTO_STORIES_ROUNDED),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.BACK_HAND_ROUNDED),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.BALANCE_ROUNDED),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.BATHROOM_ROUNDED),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.BATTERY_5_BAR_OUTLINED),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.BEACH_ACCESS_OUTLINED),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.BEDTIME),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.BOLT_ROUNDED),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.ANIMATION_ROUNDED),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.APPS_ROUNDED),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.AREA_CHART_ROUNDED),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.ASSISTANT_PHOTO_ROUNDED),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.AUTO_FIX_HIGH_ROUNDED),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.BRIGHTNESS_5_ROUNDED),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.BUG_REPORT),
+                    ft.IconButton(on_click=self.icon_init, icon=ft.icons.CAKE),
+
+                    # ft.IconButton(on_click=self.icon_init, icon=ft.),
+                    # ft.IconButton(on_click=self.icon_init, icon=ft.),
+                    # ft.IconButton(on_click=self.icon_init, icon=ft.),
+                    # ft.IconButton(on_click=self.icon_init, icon=ft.),
+                    # ft.IconButton(on_click=self.icon_init, icon=ft.),
+                    # ft.IconButton(on_click=self.icon_init, icon=ft.),
+                    # ft.IconButton(on_click=self.icon_init, icon=ft.),
+                    # ft.IconButton(on_click=self.icon_init, icon=ft.),
+                    # ft.IconButton(on_click=self.icon_init, icon=ft.),
+                    # ft.IconButton(on_click=self.icon_init, icon=ft.),
                 ],
                 height=400,
                 width=400,
@@ -141,7 +192,7 @@ class App(ft.UserControl):
         )
         self.animArray = ["· .(^-^)' ·", "⁎ -(^-^)- ⁎", "﹡ '(^-^). ﹡", "⁕ -(^o^)- ⁕",
                           "✱ .(^-^)' ✱", "⁕ -(^-^)- ⁕", "★ '(^-^). ★", "☆ -(^-^)- ☆"]
-        self.complete_comb = ft.Text(" ", opacity=0.7, text_align=ft.TextAlign.CENTER, scale=1.6)
+        self.complete_comb = ft.Text(" ", opacity=0.7, text_align=ft.TextAlign.CENTER, scale=1.6, height=30)
         self.complete_dialog = ft.AlertDialog(
             modal=True,
             title=ft.Text("Выполнить все цели?", text_align=ft.TextAlign.CENTER),
@@ -305,6 +356,8 @@ class App(ft.UserControl):
         self.complete_dialog.open = False
         self.page.update()
         for key, value in self.list_goals_value.items():
+            key.plus_btn.disabled = True
+            key.minus_btn.disabled = True
             while key.counter != value:
                 key.plus_click(self)
             self.update()

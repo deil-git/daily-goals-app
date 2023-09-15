@@ -177,6 +177,8 @@ class Goal(ft.UserControl):
             time.sleep(0.01)
             self.update()
         if self.progress_ring.value >= 0.999999999999:
+            self.plus_btn.disabled = True
+            self.minus_btn.disabled = True
             time.sleep(0.3)
             self.pr_icon.scale = 0
             self.update()
